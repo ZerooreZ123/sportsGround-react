@@ -1,0 +1,56 @@
+.listContainer {
+  padding-top: 30px;
+}
+
+.listItem {
+  height: 140px;
+  background: #fff url('../asset/booking/triangle.png') no-repeat right top;
+  background-size: auto 100%;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.demoImg {
+  width: 162px;
+  height: 120px;
+  left: 20px;
+  top: 8px;
+  position: absolute;
+}
+
+.rightDiv {
+  margin-left: 200px;
+  color: #333;
+}
+
+.title {
+  font-size: 30px;
+  padding-top: 12px;
+}
+
+.date, .time {
+  font-size: 22px;
+}
+
+.date {
+  padding-top: 10px
+}
+
+.time {
+  padding-top: 5px;
+}
+
+.stateImg {
+  width: 136px;
+  position: absolute;
+  left: 458px;
+  top: 32px;
+}
+
+.money {
+  font-size: 22px;
+  color: #fe9c02;
+  position: absolute;
+  right: 10px;
+  top: 32px;
+}

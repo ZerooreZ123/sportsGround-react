@@ -1,0 +1,84 @@
+.container {
+  padding: 2px 22px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url('../asset/myWalletBg.jpg') no-repeat;
+  background-size: 100% 100%;
+}
+
+.card {
+  height: 390px;
+  background: url('../asset/card.png') no-repeat;
+  background-size: 100% 100%;
+  margin-top: 36px;
+  position: relative;
+}
+
+.cardTitle1 {
+  position: absolute;
+  left: 80px;
+  top: 50px;
+  color: #333;
+}
+
+.cardTitle1big {
+  font-size: 72px;
+}
+
+.cardTitle1small {
+  font-size: 36px;
+}
+
+.hasPay {
+  font-size: 36px;
+  color: #b7b6b6;
+  height: 68px;
+  width: 148px;
+  border: 1px solid #b7b6b6;
+  text-align: center;
+  line-height: 68px;
+  background-color: #fff;
+  position: absolute;
+  left: 80px;
+  top: 160px;
+  border-radius: 10px;
+}
+
+.refund, .recharge {
+  font-size: 36px;
+  color: #fff;
+  height: 68px;
+  width: 148px;
+  text-align: center;
+  line-height: 68px;
+  background-color: #d03534;
+  position: absolute;
+  right: 50px;
+  bottom: 33px;
+  border-radius: 10px;
+}
+
+.money {
+  font-size: 50px;
+  position: absolute;
+  left: 80px;
+  top: 160px;
+}
+.give {
+  position:absolute;
+  top:230px;
+  left:80px;
+  font-size:36px;
+  color:#d03435;
+}
+.amount {
+  position:absolute;
+  top:280px;
+  left:80px;
+  font-size:30px;
+  color:#333;
+
+}

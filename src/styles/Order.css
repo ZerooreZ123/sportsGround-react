@@ -1,0 +1,117 @@
+.infoContainer {
+  background-color: #fff;
+  /* height: 212px; */
+  padding-top: 18px;
+}
+
+.priceContainer {
+  background-color: #fff;
+  margin-top: 20px;
+  margin-bottom:84px;
+}
+
+.priceItem {
+  height: 60px;
+  line-height: 60px;
+  font-size: 24px;
+  padding-left: 40px;
+  border-bottom: 1px solid #eee;
+}
+
+.priceItemTitle {
+  font-size: 30px;
+  padding-left: 70px;
+  background: #fff url('../asset/order/order.png') no-repeat 40px center;
+  background-size: 24px;
+}
+
+.title {
+  font-size: 30px;
+  color: #333;
+  padding-left: 70px;
+  background: url('../asset/order/order.png') no-repeat 40px center;
+  background-size: 24px;
+}
+
+.infoDetailContainer {
+  margin-top: 20px;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+}
+
+.infoDetailContainer>img {
+  position: absolute;
+  left: 40px;
+  top: 0px;
+  height: 130px;
+  width: 176px;
+  display: block;
+  background-color: #aaa;
+}
+
+.rightDiv {
+  margin-left: 234px;
+  font-size: 24px;
+}
+
+.infoTitle {
+  font-size: 30px;
+}
+
+.infoPrice {
+  margin-top: 10px;
+}
+
+.infoTime {
+  margin-top: 10px;
+}
+
+.price {
+  float: right;
+  color: #d03434;
+  margin-right: 30px;
+}
+
+.coupon {
+  float: right;
+  margin-right: 30px;
+  background: url('../asset/order/arrow.png') no-repeat right center;
+  background-size: 12px;
+  padding-right: 20px;
+}
+
+.payBtn {
+  color: #fff;
+  font-size: 36px;
+  height: 84px;
+  line-height: 84px;
+  text-align: center;
+  background-color: #d03534;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.mask {
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.maskList {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.maskListItem {
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  padding: 25px 45px;
+  font-size: 30px;
+}

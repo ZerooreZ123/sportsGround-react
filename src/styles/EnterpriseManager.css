@@ -1,0 +1,34 @@
+.listItem {
+  background: #fff;
+  padding: 28px 0;
+  margin: 20px 0;
+}
+
+.listItem > div, .listItem > span{
+  vertical-align: middle;
+}
+.listItem > span{
+  margin:0 20px;
+}
+.listItemName {
+  display: inline-block;
+  width:180px;
+  text-align: center;
+}
+
+.listItemPhone {
+  display: inline-block;
+  width:280px;
+  text-align: center;
+}
+.imgBox{
+  display:inline-block;
+  width:120px;
+  text-align: center;
+}
+.listItemImg{
+  display:inline-block;
+  width:60px;
+ 
+  vertical-align: middle;
+}

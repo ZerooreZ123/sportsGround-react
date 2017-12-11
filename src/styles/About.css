@@ -1,0 +1,52 @@
+.logoContainer {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 670px;
+  margin-top: 78px;
+}
+
+.websiteImg {
+  width: 670px;
+  margin-top: 70px;
+}
+
+.panel {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.contentImg {
+  width: 100%;
+}
+
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.contentImgGrid {
+  display: block;
+  width: 335px;
+  margin-bottom: 10px;
+}
+
+.contentText {
+  font-size: 20px;
+  color: #333;
+}
+
+.bottomText {
+  font-size: 20px;
+  color: #d03434;
+  padding-left: 35px;
+  padding-top: 15px;
+}
+
+.bottomText>div {
+  margin-bottom: 16px;
+}

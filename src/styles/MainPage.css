@@ -1,0 +1,109 @@
+.topBg {
+  width: 100%;
+  display: block;
+}
+
+.infoBar {
+  margin-top: 40px;
+  height: 66px;
+  line-height: 66px;
+  background-color: #fff;
+  color: #39e08e;
+  font-size: 30px;
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+.container {
+  margin-top: 36px;
+}
+
+.listItem {
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  padding-left: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 25px;
+  position: relative;
+}
+
+.listItemTime {
+  display: inline-block;
+  width: 360px;
+}
+
+.listItemImg {
+  position: absolute;
+  right: 23px;
+  height: 35px;
+  width: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.wrap {
+  padding-bottom: 150px;
+}
+
+.bot {
+  background-color: #fff;
+  height: 98px;
+  line-height: 98px;
+  font-size: 30px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.botText {
+  padding-left: 30px;
+}
+
+.botBtn1 {
+  width: 180px;
+  height: 98px;
+  float: right;
+  text-align: center;
+  color: #fff;
+  background-color: #ee792f;
+  cursor: pointer;
+}
+
+.botBtn2 {
+  width: 180px;
+  height: 98px;
+  float: right;
+  text-align: center;
+  color: #fff;
+  background-color: #d03534;
+  cursor: pointer;
+}
+.mask {
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.maskList {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background: #fff;
+}
+.confirm {
+  position:absolute;
+  right:30px;
+  bottom:30px;
+  width:140px;
+  height:50px;
+  line-height: 50px;
+  text-align: center;
+  font-size:30px;
+  color:#fff;
+  background:green;
+}
