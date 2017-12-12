@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { HashRouter as Router,} from 'react-router-dom';
 import Picker from 'react-mobile-picker';
 import XHR from '../utils/request';
 import API, { admin } from '../api/index';
@@ -38,6 +37,7 @@ const Mask = ({ optionGroups, valueGroups, visible, parent }) => {
 class MainPage extends Component {
   constructor() {
     super();
+    window.temp = {};
     this.state = {
       dataSource: {},
       mask: false,
@@ -56,7 +56,7 @@ class MainPage extends Component {
     document.querySelector('title').innerText = '主页';
     this.siteDate();
     this.siteInfo();
-    window.temp3 = this.props.match.params;
+    window.temp.userSiteId = this.props.match.params;  //userSiteId 路由传参
   }
   handleChange = (name, value) => {
     this.setState({ valueGroups: { data: value } });
@@ -70,7 +70,7 @@ class MainPage extends Component {
   selectCoupon(ev) {
     ev.stopPropagation();
   }
-  selectTime(i) {
+  selectTime(i) {     //预订场次状态切换
     this.state.record[i].selected = !this.state.record[i].selected;
     let total = 0;
     this.state.record.forEach(el => {
@@ -81,20 +81,20 @@ class MainPage extends Component {
     this.setState({ total, record: this.state.record })
 
   }
-  async siteDate() {
+  async siteDate() {    //场地日期
     const result = await XHR.post(API.siteDate, {
       id:this.props.match.params.id
     })
     this.setState({ optionGroups: { data: JSON.parse(result).data } });
   }
-  async siteInfo() {
+  async siteInfo() {    //场地信息
     const result = await XHR.post(API.siteInfo, {
       id:this.props.match.params.id
     })
     this.setState({ dataSource: JSON.parse(result).data });
     this.setState({picSrc:JSON.parse(result).data.pic})
   }
-  async sitePrice() {
+  async sitePrice() {   //场地时间段价格表
     this.setState({ mask: false });
     const result = await XHR.post(API.sitePrice, {
       userid:this.props.match.params.userid,
@@ -105,8 +105,8 @@ class MainPage extends Component {
     this.setState({ total: 0 })
   }
 
-  async orderPredetermine() {
-    const { dataSource,record,valueGroups } = this.state;
+  async orderPredetermine() {    //立即支付
+    const { dataSource,valueGroups } = this.state;
     const ret = [];
 
     this.state.record.forEach(el => {
@@ -123,44 +123,32 @@ class MainPage extends Component {
         })
       }
     });
-    let totalPrice = this.state.total;
-    window.send_data2= JSON.stringify(ret);
-    let temp1 = JSON.parse(window.send_data2),
-      send_data = {
+    
+    window.temp.siteDetails= ret;    //siteDetails 勾选的场地详情信息
+    let send_data = {
       userid:this.props.match.params.userid,
       orders: []
     };
 
-    temp1.forEach((el,i)=>{
+    ret.forEach((el,i)=>{
       send_data.orders.push({
         siteId:this.props.match.params.id,
-        sitePriceId: record[i].id,
-        price: record[i].price,
+        sitePriceId: ret[i].id,
+        price: ret[i].price,
         useDate: valueGroups.data
       })
     })    
 
-    window.sendDate = send_data;
+    window.temp.sendDate = send_data;    // sendDate 立即支付传参
     const result = await XHR.post(API.orderPredetermine,send_data);
-    window.temp2= totalPrice;
-    if(JSON.parse(result).success === true) {
+    window.temp.totalPrice= this.state.total;  //totalPrice 总价
+    if(JSON.parse(result).success === true && this.state.total) {
       this.props.history.push('/order');
     }
-
-    // if(JSON.parse(result).msg ==='操作成功') {    
-    //    this.props.history.push('/order');
-    // }else if(JSON.parse(result).msg ==='该用户未通过审核'){
-    //    this.props.history.push('/userCenter'+this.props.match.params.userid);
-    // }else{
-    //   alert(JSON.parse(result).data+"时间段已被预订")
-    // }
   }
 
   render() {
-    const { optionGroups, valueGroups,dataSource,record } = this.state;
-    // const { dataSource } = this.state;
-    // const { record } = this.state;
-
+    const { optionGroups, valueGroups,record } = this.state;
     return (
       <div className={styles.wrap}>
         <div>

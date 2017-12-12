@@ -27,14 +27,14 @@ class Order extends Component {
     this.setState({ mask: true });
   }
   
-  selectCoupon(i) {
+  selectCoupon(i) {     //选择优惠券计算折扣
     this.setState({ Coupon: this.state.dataSource[i].discount + '折优惠券' })
     this.setState({ mask: false });
-    const temp1 = JSON.parse(window.send_data2);
-    let temp2 = window.temp2;
+    const tempDetails = window.temp.siteDetails;
+    let tempPrice = window.temp.totalPrice;
 
     const arrPrice = [];
-    temp1.forEach(el => {
+    tempDetails.forEach(el => {
       arrPrice.push(el.price-0);
     });
     let max = Math.max(...arrPrice);
@@ -43,30 +43,29 @@ class Order extends Component {
     
     let maxDiscount = max * (1 - this.state.dataSource[i].discount * 0.1);
     window.discountPrice = max *(this.state.dataSource[i].discount * 0.1);
-    if (parseInt(temp2) === 0) {
-      this.setState({ discountPrice: temp2 })
+    if (parseInt(tempPrice) === 0) {
+      this.setState({ discountPrice: tempPrice })
     } else {
-      let discountPrice = (temp2 - maxDiscount).toFixed(2);
+      let discountPrice = (tempPrice - maxDiscount).toFixed(2);
       this.setState({ discountPrice: discountPrice });
     }
   }
-  async conpon() {
+  async conpon() {    //优惠券列表
     const result = await XHR.post(API.conpon, {
-      userid: window.temp3.userid
+      userid: window.temp.userSiteId.userid
     })
-    console.log(JSON.parse(result).data)
     if(JSON.parse(result).data.length === 0) {
       this.setState({Coupon:'无优惠券'})
-      this.setState({discountPrice:window.temp2}) 
+      this.setState({discountPrice:window.temp.totalPrice}) 
     }else {
       this.setState({ dataSource: JSON.parse(result).data });
-      this.setState({discountPrice:window.temp2}) 
+      this.setState({discountPrice:window.temp.totalPrice}) 
     }
   }
-  async orderPay() {
-    let ordersArray = window.sendDate.orders;
+  async orderPay() {     //支付
+    let ordersArray = window.temp.sendDate.orders;
     let data = {
-      userid: window.temp3.userid,
+      userid: window.temp.userSiteId.userid,
       orders: []
     };    
     
@@ -82,13 +81,13 @@ class Order extends Component {
       data.orders[window.indexMax].price = window.discountPrice.toFixed(2);
       data.orders[window.indexMax].userCouponId = window.couponId;
     }
-    console.log(data);
     const result = await XHR.post(API.orderPay, data);
-    window.WeixinJSBridge.invoke(
+    window.WeixinJSBridge.invoke(           //调用微信支付接口
       'getBrandWCPayRequest', JSON.parse(result).data,
       (res) => {
         if (res.err_msg === "get_brand_wcpay_request:ok") {
-          this.props.history.push("/about");
+          // this.props.history.push("/about");
+          alert("支付成功");
         }
       }
     );
@@ -96,8 +95,7 @@ class Order extends Component {
 
   render() {
 
-    const temp1 = JSON.parse(window.send_data2);
-    let temp2 = window.temp2;
+    const tempDetails = window.temp.siteDetails;
     const { dataSource } = this.state;
 
     const Mask = props => {
@@ -123,7 +121,7 @@ class Order extends Component {
           <div className={styles.infoContainer}>
             <div className={styles.title}>订单信息</div>
             {
-              temp1.map((item, index) =>
+              tempDetails.map((item, index) =>
                 <div className={styles.infoDetailContainer} key={index}>
                   <img src={admin + item.pic} alt="" />
                   <div className={styles.rightDiv}>
@@ -142,7 +140,7 @@ class Order extends Component {
             </div>
             <div className={styles.priceItem}>
               总金额：
-              <span className={styles.price}>￥{temp2}</span>
+              <span className={styles.price}>￥{window.temp.totalPrice}</span>
             </div>
             <div className={styles.priceItem} onClick={ev => this.showMask()}>
               优惠券：

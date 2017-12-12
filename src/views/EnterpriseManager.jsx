@@ -21,37 +21,44 @@ class EnterpriseManager extends Component {
     let mes = "确定要删除吗？";
     if(window.confirm(mes) === true) {
       this.deleteItem(i);
-      const list = this.state.dataSource;
-      list.splice(i,1);
-      this.setState({dataSource:this.state.dataSource});
     }else{
       return false
     }
   }
-  async deleteItem(i) {
+  async deleteItem(i) {    // 删除员工项
     const result = await XHR.post(API.userAudit,{
-      userId:this.props.match.params.userid,
+      targetId:this.props.match.params.userid,
       passed:this.state.dataSource[i].passed,
-      del_flag:1
+      delflag:1
     })
+    if(JSON.parse(result).success) {
+      const list = this.state.dataSource;
+      list.splice(i,1);
+      this.setState({dataSource:this.state.dataSource});
+    }else{
+      alert('删除失败');
+    }
   }
-  async usreList() {
+  async usreList() {     // 员工审核列表
     const result = await XHR.post(API.usreList,{
       id:this.props.match.params.userid
     });
-    this.setState({dataSource: JSON.parse(result).data});
-    console.log(this.state.dataSource);
+    this.setState({dataSource: JSON.parse(result).data || []});
+    if(JSON.stringify(result).success === false) {
+      alert('无权限');
+    }
   }
-  async userAudit(i){
+  async userAudit(i){    // 审核员工
     if(this.state.dataSource[i].passed ==='Y') {
       this.state.dataSource[i].passed ='N'
     }else{
       this.state.dataSource[i].passed ='Y';
     }
     const result = await XHR.post(API.userAudit,{
-      userId:this.props.match.params.userid,
+      targetId:this.props.match.params.userid,
       id:this.state.dataSource[i].id,
-      passed:this.state.dataSource[i].passed
+      delflag:0,
+      passed: this.state.dataSource[i].passed
     })
     this.setState({dataSource:this.state.dataSource})
   }

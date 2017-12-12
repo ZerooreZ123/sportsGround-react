@@ -15,14 +15,14 @@ class MyWallet extends Component {
     document.querySelector('title').innerText = '我的钱包';
     this.Balance();
   }
-  async Balance() {
+  async Balance() {    // 钱包余额
     const result = await XHR.post(API.Balance,{
       id:this.props.match.params.userid
     })
     this.setState({dataSource: JSON.parse(result).data});
     console.log(this.state.dataSource);
   }
-  async deposit() {
+  async deposit() {    // 退款
     const result = await XHR.post(API.orderRefund,{
       userid:this.props.match.params.userid
     })
@@ -40,7 +40,7 @@ class MyWallet extends Component {
             <span className={styles.cardTitle1small}>(￥300)</span>
           </div>
           <div className={styles.hasPay}>{dataSource.deposit === 'Y' ?'已支付':'未缴纳'}</div>
-          <div className={styles.refund} onClick={ev =>this.deposit(ev)}>退款</div>
+          <div className={styles.refund} onClick={ev =>this.deposit(ev)}>{dataSource.deposit === 'Y' ?'退款':'缴纳'}</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardTitle1}>

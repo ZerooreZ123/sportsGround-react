@@ -34,11 +34,11 @@ class Recharge extends Component {
       this.state.dataSource[i].selected = !this.state.dataSource[i].selected;
       this.setState({dataSource:this.state.dataSource});
     }
-    async payList() {
+    async payList() {    // 充值金额列表
       const result = await XHR.post(API.payList);
       this.setState({dataSource:JSON.parse(result).data });
     }
-    async orderRechare() {
+    async orderRechare() {    //  充值
       const {dataSource} = this.state;
       let priceId ='';
       dataSource.forEach((el,i) =>{
@@ -51,12 +51,14 @@ class Recharge extends Component {
         userid:this.props.match.params.userid,
         orderType:1
       })
-      window.WeixinJSBridge.invoke(
+      window.WeixinJSBridge.invoke(     // 调用微信支付接口
         'getBrandWCPayRequest', JSON.parse(result).data,
         (res) => {
           if (res.err_msg === "get_brand_wcpay_request:ok") {
-            this.props.history.push("/about");
+            // this.props.history.push("/about");
+            alert('充值成功');
           }
+          alert(JSON.stringify(res))
         }
       );
     }

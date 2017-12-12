@@ -30,7 +30,7 @@ class UserCenter extends Component {
     this.setState({valuePhone: ev.target.value});
   }
 
-  editCompany(ev) {
+  editCompany(ev) {     // 获取公司名字及对应索引
     const data = this.state.arr;
     const value=[],
           ids = [];
@@ -46,14 +46,26 @@ class UserCenter extends Component {
       valueCompany:ev.target.value
     });
   }
-  addCompany(i) {
+  // getCompanyId () {    
+  //   const data = this.state.arr;
+  //   let index = ''
+  //   if(this.state.valueCompany) {
+  //     data.forEach((el,i)=>{
+  //       if(el.name.match(this.state.valueCompany)){
+  //         index = data[i].id;
+  //       }
+  //     })
+  //     this.setState({company_id:index})  
+  //   }
+  // }
+  addCompany(i) {     //填充公司名称及对应ID
     this.setState({
       valueCompany:this.state.val[i],
       company_id:this.state.ids[i]
     });
     this.setState({val:[]});
   }
-  async getUser() {
+  async getUser() {    // 用户信息
     const result = await XHR.post(API.getUser,{
       id:this.props.match.params.userid
     })
@@ -62,7 +74,8 @@ class UserCenter extends Component {
     this.setState({valueCompany:JSON.parse(result).data.companyName})
   }
 
-  async editUserInfo() {
+  async editUserInfo() {    // 修改用户信息
+    
     if(!this.state.valueName || !this.state.valuePhone || !this.state.company_id) {
       alert("请填完整个人信息");
       return false;
@@ -81,7 +94,7 @@ class UserCenter extends Component {
       alert("修改个人信息成功");
     }
   }
-  async companyList() {
+  async companyList() {     // 获取公司列表
     const result=await XHR.post(API.companyList,{
       id:this.props.match.params.userid
     })
