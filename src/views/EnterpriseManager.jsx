@@ -27,7 +27,7 @@ class EnterpriseManager extends Component {
   }
   async deleteItem(i) {    // 删除员工项
     const result = await XHR.post(API.userAudit,{
-      targetId:this.props.match.params.userid,
+      targetId:this.state.dataSource[i].id,
       passed:this.state.dataSource[i].passed,
       delflag:1
     })
@@ -44,8 +44,8 @@ class EnterpriseManager extends Component {
       id:this.props.match.params.userid
     });
     this.setState({dataSource: JSON.parse(result).data || []});
-    if(JSON.stringify(result).success === false) {
-      alert('无权限');
+    if(JSON.parse(result).success === false) {
+      alert(JSON.parse(result).msg);
     }
   }
   async userAudit(i){    // 审核员工
@@ -55,7 +55,7 @@ class EnterpriseManager extends Component {
       this.state.dataSource[i].passed ='Y';
     }
     const result = await XHR.post(API.userAudit,{
-      targetId:this.props.match.params.userid,
+      targetId:this.state.dataSource[i].id,
       id:this.state.dataSource[i].id,
       delflag:0,
       passed: this.state.dataSource[i].passed

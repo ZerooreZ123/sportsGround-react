@@ -30,7 +30,7 @@ class UserCenter extends Component {
     this.setState({valuePhone: ev.target.value});
   }
 
-  editCompany(ev) {     // 获取公司名字及对应索引
+  editCompany(ev) {     // 模糊匹配公司名字
     const data = this.state.arr;
     const value=[],
           ids = [];
@@ -65,7 +65,7 @@ class UserCenter extends Component {
     });
     this.setState({val:[]});
   }
-  async getUser() {    // 用户信息
+  async getUser() {    // 用户信息自动填充
     const result = await XHR.post(API.getUser,{
       id:this.props.match.params.userid
     })
@@ -120,7 +120,6 @@ class UserCenter extends Component {
           <div className={styles.pen}><span>姓名：</span><input type="text" placeholder="请输入姓名" className={styles.name} onChange={ev =>this.editName(ev)} value={this.state.valueName}/></div>
           <div className={styles.pen}><span>手机号：</span><input type="text" placeholder="请输入手机号" className={styles.name} onChange={ev =>this.editPhone(ev)} value={this.state.valuePhone}/></div>
           <div className={styles.arrow}><span>公司名称：</span><input type="text" placeholder="请输入公司名称" className={styles.name} onChange={ev =>this.editCompany(ev)} value={this.state.valueCompany}/></div>
-          {/* <div className={styles.arrow}><span>公司名称：</span><input type="text" placeholder="请输入公司名称" className={styles.name} onChange={ev =>this.editCompany(ev)} value={this.state.input_val}/></div> */}
           <ul className={styles.list}>
             {
               val.map((item,index) =>

@@ -14,6 +14,7 @@ import BookingRecord from './views/BookingRecord';
 import EnterpriseManager from './views/EnterpriseManager';
 import Recharge from './views/Recharge';
 import QrCode from './views/QrCode';
+import Payment from './views/Payment';
 
 class App extends Component {
   render() {
@@ -47,6 +48,7 @@ class App extends Component {
                   <Route location={props.location} exact path="/enterpriseManager/:userid" component={EnterpriseManager} />
                   <Route location={props.location} exact path="/recharge/:userid" component={Recharge} />
                   <Route location={props.location} exact path="/qrCode/:userid" component={QrCode} />
+                  <Route location={props.location} exact path="/payment/:userid" component={Payment} />
                 </div>
               </CSSTransitionGroup>
             )

@@ -22,13 +22,22 @@ class MyWallet extends Component {
     this.setState({dataSource: JSON.parse(result).data});
     console.log(this.state.dataSource);
   }
-  async deposit() {    // 退款
-    const result = await XHR.post(API.orderRefund,{
-      userid:this.props.match.params.userid
-    })
-    if(JSON.parse(result).success === true) {
-      alert('退款成功');
-    }
+  async deposit() {    // 押金退款及缴纳
+    if(this.state.dataSource.deposit === 'Y'){       
+      const result = await XHR.post(API.orderRefund,{    //退款
+        userid:this.props.match.params.userid
+      })
+      if(JSON.parse(result).success === true) {
+        alert('退款成功');
+      }
+    }else{
+      const result = await XHR.post(API.orderRechare,{   //缴纳
+        userid:this.props.match.params.userid,
+        orderType:2
+      })
+      window.wxPay = JSON.parse(result).data;
+      this.props.history.push("/payment/"+this.props.match.params.userid);
+    }   
   }
   render() {
     const {dataSource} = this.state;

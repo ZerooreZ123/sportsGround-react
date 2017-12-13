@@ -101,7 +101,7 @@ class MainPage extends Component {
       siteid:this.props.match.params.id,
       date: this.state.valueGroups.data
     })
-    this.setState({ record: JSON.parse(result).data })
+    this.setState({ record: JSON.parse(result).data ||[] })
     this.setState({ total: 0 })
   }
 
@@ -144,6 +144,8 @@ class MainPage extends Component {
     window.temp.totalPrice= this.state.total;  //totalPrice 总价
     if(JSON.parse(result).success === true && this.state.total) {
       this.props.history.push('/order');
+    }else{
+      alert(JSON.parse(result).msg)
     }
   }
 

@@ -19,6 +19,7 @@ class Order extends Component {
     this.conpon();
   }
   componentWillUnmount() {
+    delete window.temp;
   }
   hideMask() {
     this.setState({ mask: false });
@@ -30,7 +31,7 @@ class Order extends Component {
   selectCoupon(i) {     //选择优惠券计算折扣
     this.setState({ Coupon: this.state.dataSource[i].discount + '折优惠券' })
     this.setState({ mask: false });
-    const tempDetails = window.temp.siteDetails;
+    const tempDetails = window.temp.siteDetails || [];
     let tempPrice = window.temp.totalPrice;
 
     const arrPrice = [];
@@ -82,20 +83,13 @@ class Order extends Component {
       data.orders[window.indexMax].userCouponId = window.couponId;
     }
     const result = await XHR.post(API.orderPay, data);
-    window.WeixinJSBridge.invoke(           //调用微信支付接口
-      'getBrandWCPayRequest', JSON.parse(result).data,
-      (res) => {
-        if (res.err_msg === "get_brand_wcpay_request:ok") {
-          // this.props.history.push("/about");
-          alert("支付成功");
-        }
-      }
-    );
+    window.wxPay = JSON.parse(result).data;
+    this.props.history.push("/payment/"+this.props.match.params.userid);
   }
 
   render() {
 
-    const tempDetails = window.temp.siteDetails;
+    const tempDetails = window.temp.siteDetails || [];
     const { dataSource } = this.state;
 
     const Mask = props => {

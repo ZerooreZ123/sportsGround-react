@@ -51,16 +51,8 @@ class Recharge extends Component {
         userid:this.props.match.params.userid,
         orderType:1
       })
-      window.WeixinJSBridge.invoke(     // 调用微信支付接口
-        'getBrandWCPayRequest', JSON.parse(result).data,
-        (res) => {
-          if (res.err_msg === "get_brand_wcpay_request:ok") {
-            // this.props.history.push("/about");
-            alert('充值成功');
-          }
-          alert(JSON.stringify(res))
-        }
-      );
+      window.wxPay = JSON.parse(result).data;
+      this.props.history.push("/payment/"+this.props.match.params.userid);
     }
     render() {
       const {dataSource} = this.state;
