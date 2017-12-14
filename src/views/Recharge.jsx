@@ -51,8 +51,12 @@ class Recharge extends Component {
         userid:this.props.match.params.userid,
         orderType:1
       })
-      window.wxPay = JSON.parse(result).data;
-      this.props.history.push("/payment/"+this.props.match.params.userid);
+      if(JSON.parse(result).data !== '') {
+        window.wxPay = JSON.parse(result).data;
+        this.props.history.push("/payment/"+this.props.match.params.userid);
+      }else{
+        alert('请选择充值金额');
+      }
     }
     render() {
       const {dataSource} = this.state;

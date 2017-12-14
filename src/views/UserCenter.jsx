@@ -11,7 +11,6 @@ class UserCenter extends Component {
       arr:[],
       val:[],
       ids:[],
-      input_val:'',
       company_id:'',
       valueName:'',
       valuePhone:'',
@@ -46,18 +45,6 @@ class UserCenter extends Component {
       valueCompany:ev.target.value
     });
   }
-  // getCompanyId () {    
-  //   const data = this.state.arr;
-  //   let index = ''
-  //   if(this.state.valueCompany) {
-  //     data.forEach((el,i)=>{
-  //       if(el.name.match(this.state.valueCompany)){
-  //         index = data[i].id;
-  //       }
-  //     })
-  //     this.setState({company_id:index})  
-  //   }
-  // }
   addCompany(i) {     //填充公司名称及对应ID
     this.setState({
       valueCompany:this.state.val[i],
@@ -72,6 +59,7 @@ class UserCenter extends Component {
     this.setState({valueName:JSON.parse(result).data.name});
     this.setState({valuePhone:JSON.parse(result).data.phone});
     this.setState({valueCompany:JSON.parse(result).data.companyName})
+    this.setState({company_id:JSON.parse(result).data.companyid})
   }
 
   async editUserInfo() {    // 修改用户信息

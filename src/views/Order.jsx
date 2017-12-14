@@ -83,8 +83,13 @@ class Order extends Component {
       data.orders[window.indexMax].userCouponId = window.couponId;
     }
     const result = await XHR.post(API.orderPay, data);
-    window.wxPay = JSON.parse(result).data;
-    this.props.history.push("/payment/"+this.props.match.params.userid);
+    if(JSON.parse(result).data !== ''){
+      window.wxPay = JSON.parse(result).data;
+      this.props.history.push("/payment/"+this.props.match.params.userid);
+    }else{
+      alert('支付完成')
+      window.history.go(-1);
+    }
   }
 
   render() {
