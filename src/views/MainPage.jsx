@@ -7,6 +7,7 @@ import styles from '../styles/MainPage.css';
 
 import select0 from '../asset/icon/select-0.png';
 import select1 from '../asset/icon/select-1.png';
+import loading from '../asset/icon/loading.gif';
 
 const SelectBtn = (props) => {
   if (props.checked === true) {
@@ -70,6 +71,9 @@ class MainPage extends Component {
   selectCoupon(ev) {
     ev.stopPropagation();
   }
+  load() {
+    this.setState({picSrc:loading})
+  }
   selectTime(i) {     //预订场次状态切换
     this.state.record[i].selected = !this.state.record[i].selected;
     let total = 0;
@@ -92,7 +96,7 @@ class MainPage extends Component {
       id:this.props.match.params.id
     })
     this.setState({ dataSource: JSON.parse(result).data });
-    this.setState({picSrc:JSON.parse(result).data.pic})
+    this.setState({picSrc:admin+JSON.parse(result).data.pic})
   }
   async sitePrice() {   //场地时间段价格表
     this.setState({ mask: false });
@@ -154,7 +158,7 @@ class MainPage extends Component {
     return (
       <div className={styles.wrap}>
         <div>
-          <img className={styles.topBg} src={admin + this.state.picSrc} alt="" />
+          <img className={styles.topBg}  onError={ev =>this.load(ev)} src={this.state.picSrc} alt="" />
         </div>
         <div className={styles.infoBar} onClick={ev => this.showMask()}>{this.state.valueGroups.data === '' ? '请选择日期' : this.state.valueGroups.data}</div>
         <div className={styles.container}>

@@ -13,7 +13,7 @@ class PayRecord extends Component {
     };
   }
   componentDidMount(){
-    document.querySelector('title').innerText = '支付记录';
+    document.querySelector('title').innerText = '充值记录';
     this.orderRechareRecords();
   }
   async orderRechareRecords() {
