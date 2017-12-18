@@ -29,14 +29,15 @@ class MyWallet extends Component {
       })
       if(JSON.parse(result).success === true) {
         alert('退款成功');
+        window.location.reload()
       }
     }else{
       const result = await XHR.post(API.orderRechare,{   //缴纳
         userid:this.props.match.params.userid,
         orderType:2
       })
-      window.wxPay = JSON.parse(result).data;
-      this.props.history.push("/payment/"+this.props.match.params.userid);
+      window.sessionStorage.setItem('wxPay',result);
+      window.location.href = './payment.html';
     }   
   }
   render() {

@@ -144,12 +144,17 @@ class MainPage extends Component {
     })    
 
     window.temp.sendDate = send_data;    // sendDate 立即支付传参
-    const result = await XHR.post(API.orderPredetermine,send_data);
-    window.temp.totalPrice= this.state.total;  //totalPrice 总价
-    if(JSON.parse(result).success === true && this.state.total) {
-      this.props.history.push('/order');
+    console.log(send_data.orders);
+    if(send_data.orders.length){         // 判断是否选择日期
+      const result = await XHR.post(API.orderPredetermine,send_data);
+      window.temp.totalPrice= this.state.total;  //totalPrice 总价
+      if(JSON.parse(result).success === true && this.state.total) {  //判断是否勾选场次
+        this.props.history.push('/order');
+      }else{
+        alert(JSON.parse(result).msg)
+      }
     }else{
-      alert(JSON.parse(result).msg)
+      alert("请选择预订日期")
     }
   }
 
@@ -166,14 +171,14 @@ class MainPage extends Component {
             record.map((item, index) =>
               <div className={styles.listItem} key={index} onClick={ev => this.selectTime(index)}>
                 <div className={styles.listItemTime}>{item.starttime}-{item.endtime}</div>
-                <span className={styles.listItemMoney}>￥{item.userPrice}</span>
+                <span className={styles.listItemMoney}>￥{item.userPrice/100}</span>
                 <SelectBtn checked={item.selected}></SelectBtn>
               </div>
             )
           }
         </div>
         <div className={styles.bot}>
-          <span className={styles.botText}>总计：￥{this.state.total}</span>
+          <span className={styles.botText}>总计：￥{this.state.total/100}</span>
           <div onClick={ev => this.orderPredetermine(ev)} className={styles.botBtn2}>立即付款</div>
         </div>
         <Mask visible={this.state.mask} optionGroups={optionGroups} valueGroups={valueGroups} parent={this}></Mask>

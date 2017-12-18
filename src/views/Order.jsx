@@ -18,9 +18,6 @@ class Order extends Component {
     document.querySelector('title').innerText = '订单确认';
     this.conpon();
   }
-  componentWillUnmount() {
-    delete window.temp;
-  }
   hideMask() {
     this.setState({ mask: false });
   }
@@ -32,7 +29,7 @@ class Order extends Component {
     this.setState({ Coupon: this.state.dataSource[i].discount + '折优惠券' })
     this.setState({ mask: false });
     const tempDetails = window.temp.siteDetails || [];
-    let tempPrice = window.temp.totalPrice;
+    let tempPrice = window.temp.totalPrice/100;
 
     const arrPrice = [];
     tempDetails.forEach(el => {
@@ -57,10 +54,10 @@ class Order extends Component {
     })
     if(JSON.parse(result).data.length === 0) {
       this.setState({Coupon:'无优惠券'})
-      this.setState({discountPrice:window.temp.totalPrice}) 
+      this.setState({discountPrice:window.temp.totalPrice/100}) 
     }else {
       this.setState({ dataSource: JSON.parse(result).data });
-      this.setState({discountPrice:window.temp.totalPrice}) 
+      this.setState({discountPrice:window.temp.totalPrice/100}) 
     }
   }
   async orderPay() {     //支付
@@ -74,18 +71,18 @@ class Order extends Component {
       data.orders.push({
         siteId: ordersArray[i].siteId,
         sitePriceId: ordersArray[i].sitePriceId,
-        price: ordersArray[i].price,
+        price: ordersArray[i].price*100,
         useDate: ordersArray[i].useDate
       })
     })
     if(this.state.dataSource.length && window.discountPrice) {
-      data.orders[window.indexMax].price = window.discountPrice.toFixed(2);
+      data.orders[window.indexMax].price = window.discountPrice*100;
       data.orders[window.indexMax].userCouponId = window.couponId;
     }
     const result = await XHR.post(API.orderPay, data);
     if(JSON.parse(result).data !== ''){
-      window.wxPay = JSON.parse(result).data;
-      this.props.history.push("/payment/"+this.props.match.params.userid);
+      window.sessionStorage.setItem('wxPay',result);
+      window.location.href = './payment.html';
     }else{
       alert('支付完成')
       window.history.go(-1);
@@ -139,7 +136,7 @@ class Order extends Component {
             </div>
             <div className={styles.priceItem}>
               总金额：
-              <span className={styles.price}>￥{window.temp.totalPrice}</span>
+              <span className={styles.price}>￥{window.temp.totalPrice/100}</span>
             </div>
             <div className={styles.priceItem} onClick={ev => this.showMask()}>
               优惠券：

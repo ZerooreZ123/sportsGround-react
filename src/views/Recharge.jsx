@@ -52,8 +52,8 @@ class Recharge extends Component {
         orderType:1
       })
       if(JSON.parse(result).data !== '') {
-        window.wxPay = JSON.parse(result).data;
-        this.props.history.push("/payment/"+this.props.match.params.userid);
+        window.sessionStorage.setItem('wxPay',result);
+        window.location.href = './payment.html';
       }else{
         alert('请选择充值金额');
       }
