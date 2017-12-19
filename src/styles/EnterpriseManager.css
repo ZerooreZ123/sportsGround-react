@@ -2,33 +2,33 @@
   background: #fff;
   padding: 28px 0;
   margin: 20px 0;
+  width:100%;
 }
 
 .listItem > div, .listItem > span{
   vertical-align: middle;
 }
 .listItem > span{
-  margin:0 20px;
+  margin:0 26px;
 }
 .listItemName {
   display: inline-block;
-  width:180px;
+  width:22%;
   text-align: center;
 }
 
 .listItemPhone {
   display: inline-block;
-  width:260px;
+  width:34%;
   text-align: center;
 }
 .imgBox{
   display:inline-block;
-  width:120px;
+  width:14%;
   text-align: center;
 }
 .listItemImg{
   display:inline-block;
   width:60px;
- 
   vertical-align: middle;
 }

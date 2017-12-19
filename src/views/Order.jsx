@@ -26,44 +26,47 @@ class Order extends Component {
   }
   
   selectCoupon(i) {     //选择优惠券计算折扣
+    const tempDeposit = JSON.parse(window.sessionStorage.getItem('tempData'))
     this.setState({ Coupon: this.state.dataSource[i].discount + '折优惠券' })
     this.setState({ mask: false });
-    const tempDetails = window.temp.siteDetails || [];
-    let tempPrice = window.temp.totalPrice/100;
-
+    const tempDetails = tempDeposit.siteDetails || [];
+    let tempPrice = tempDeposit.totalPrice/100;
     const arrPrice = [];
     tempDetails.forEach(el => {
       arrPrice.push(el.price-0);
     });
-    let max = Math.max(...arrPrice);
-    window.indexMax = arrPrice.indexOf(max);
-    window.couponId = this.state.dataSource[i].id;
+    let max = Math.max(...arrPrice)/100;
+
+    window.indexMax = arrPrice.indexOf(max*100);      //选中优惠券索引
+    window.couponId = this.state.dataSource[i].id;    //选中优惠券ID
     
-    let maxDiscount = max * (1 - this.state.dataSource[i].discount * 0.1);
-    window.discountPrice = max *(this.state.dataSource[i].discount * 0.1);
+    let maxDiscount = max * (1 - this.state.dataSource[i].discount * 0.1);      //折扣价(该减去的价格)
+    window.discountPrice = Math.floor((Math.max(...arrPrice) *(this.state.dataSource[i].discount*0.1)));   //折扣的价格（传参以分计）
     if (parseInt(tempPrice) === 0) {
       this.setState({ discountPrice: tempPrice })
     } else {
-      let discountPrice = (tempPrice - maxDiscount).toFixed(2);
-      this.setState({ discountPrice: discountPrice });
+      let zhekouPrice = (tempPrice - maxDiscount).toFixed(2);       //折扣总价
+      this.setState({ discountPrice: zhekouPrice });
     }
   }
   async conpon() {    //优惠券列表
+    const tempDeposit = JSON.parse(window.sessionStorage.getItem('tempData'))   // sessionStorage储存的数据
     const result = await XHR.post(API.conpon, {
-      userid: window.temp.userSiteId.userid
+      userid: tempDeposit.userSiteId.userid
     })
     if(JSON.parse(result).data.length === 0) {
       this.setState({Coupon:'无优惠券'})
-      this.setState({discountPrice:window.temp.totalPrice/100}) 
+      this.setState({discountPrice:tempDeposit.totalPrice/100}) 
     }else {
       this.setState({ dataSource: JSON.parse(result).data });
-      this.setState({discountPrice:window.temp.totalPrice/100}) 
+      this.setState({discountPrice:tempDeposit.totalPrice/100}) 
     }
   }
   async orderPay() {     //支付
-    let ordersArray = window.temp.sendDate.orders;
+    const tempDeposit = JSON.parse(window.sessionStorage.getItem('tempData'))
+    let ordersArray = tempDeposit.sendDate.orders;
     let data = {
-      userid: window.temp.userSiteId.userid,
+      userid: tempDeposit.userSiteId.userid,
       orders: []
     };    
     
@@ -71,12 +74,12 @@ class Order extends Component {
       data.orders.push({
         siteId: ordersArray[i].siteId,
         sitePriceId: ordersArray[i].sitePriceId,
-        price: ordersArray[i].price*100,
+        price: ordersArray[i].price,
         useDate: ordersArray[i].useDate
       })
     })
     if(this.state.dataSource.length && window.discountPrice) {
-      data.orders[window.indexMax].price = window.discountPrice*100;
+      data.orders[window.indexMax].price = window.discountPrice;
       data.orders[window.indexMax].userCouponId = window.couponId;
     }
     const result = await XHR.post(API.orderPay, data);
@@ -90,8 +93,8 @@ class Order extends Component {
   }
 
   render() {
-
-    const tempDetails = window.temp.siteDetails || [];
+    const tempDeposit = JSON.parse(window.sessionStorage.getItem('tempData'))
+    const tempDetails = tempDeposit.siteDetails || [];
     const { dataSource } = this.state;
 
     const Mask = props => {
@@ -122,7 +125,7 @@ class Order extends Component {
                   <img src={admin + item.pic} alt="" />
                   <div className={styles.rightDiv}>
                     <div className={styles.infoTitle}>{item.siteName}</div>
-                    <div className={styles.infoPrice}>价格：￥{item.price}</div>
+                    <div className={styles.infoPrice}>价格：￥{item.price/100}</div>
                     <div className={styles.infoTime}>预约时间：{item.sitetime} {item.startTime}~{item.endTime}</div>
                   </div>
                 </div>
@@ -136,7 +139,7 @@ class Order extends Component {
             </div>
             <div className={styles.priceItem}>
               总金额：
-              <span className={styles.price}>￥{window.temp.totalPrice/100}</span>
+              <span className={styles.price}>￥{tempDeposit.totalPrice/100}</span>
             </div>
             <div className={styles.priceItem} onClick={ev => this.showMask()}>
               优惠券：

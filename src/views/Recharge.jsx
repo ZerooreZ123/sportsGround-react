@@ -68,13 +68,15 @@ class Recharge extends Component {
                 dataSource.map((item,index) =>
                   <div className={styles.listItem} onClick={ev =>this.selectMoney(index)} key={index}>
                     <img className={styles.listItemThumb} src={thumb} alt="" />
-                    <span className={styles.listItemMoney}>充{item.pay}送{item.presented}元</span>
+                    <span className={styles.listItemMoney}>充{item.pay/100}送{item.presented/100}元</span>
                     <SelectToggle checked={item.selected}></SelectToggle>
                   </div>
                 ) 
               }
             </div>
-            <div className={styles.rechargeBtn} onClick={ev => this.orderRechare(ev)}>确定</div>
+            <div className={styles.btnBox}>
+              <div className={styles.rechargeBtn} onClick={ev => this.orderRechare(ev)}>确定</div>
+            </div> 
         </div>
       );
     }

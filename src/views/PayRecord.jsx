@@ -20,9 +20,9 @@ class PayRecord extends Component {
     const result = await XHR.post(API.orderRechareRecords,{
       userid:this.props.match.params.userid
     })
-    console.log(result);
+    // console.log(result);
     this.setState({List: JSON.parse(result).data});
-    console.log(this.state.List);
+    // console.log(this.state.List);
   }
   render() {
     return (
@@ -32,10 +32,10 @@ class PayRecord extends Component {
             <div className={styles.listItem} key={index}>
               <img src={listIcon} className={styles.listImg} alt="" />
               <div className={styles.rightDiv}>
-                <div className={styles.listTitle}>充{item.price}送{item.giftBalance}元</div>
+                <div className={styles.listTitle}>充{item.price/100}送{item.giftBalance/100}元</div>
                 <div className={styles.listTime}>{item.createDate}</div>
               </div>
-              <div className={styles.listMoney}>￥{item.price}</div>
+              <div className={styles.listMoney}>￥{item.price/100}</div>
             </div>
           )
         }

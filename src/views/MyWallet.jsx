@@ -56,9 +56,9 @@ class MyWallet extends Component {
           <div className={styles.cardTitle1}>
             <span className={styles.cardTitle1big}>余额</span>
           </div>
-          <span className={styles.money}>￥{dataSource.balance}</span>
+          <span className={styles.money}>￥{dataSource.balance/100}</span>
           <div className={styles.give}>赠送金额</div>
-          <div className={styles.amount}>￥{dataSource.giftbalance}</div>
+          <div className={styles.amount}>￥{dataSource.giftbalance/100}</div>
           <div className={styles.recharge} onClick={ev => this.props.history.push('/recharge/'+this.props.match.params.userid)}>充值</div>
         </div>
       </div>

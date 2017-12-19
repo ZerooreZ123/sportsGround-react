@@ -144,11 +144,11 @@ class MainPage extends Component {
     })    
 
     window.temp.sendDate = send_data;    // sendDate 立即支付传参
-    console.log(send_data.orders);
     if(send_data.orders.length){         // 判断是否选择日期
       const result = await XHR.post(API.orderPredetermine,send_data);
       window.temp.totalPrice= this.state.total;  //totalPrice 总价
       if(JSON.parse(result).success === true && this.state.total) {  //判断是否勾选场次
+        window.sessionStorage.setItem('tempData',JSON.stringify(window.temp));
         this.props.history.push('/order');
       }else{
         alert(JSON.parse(result).msg)

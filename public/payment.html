@@ -47,7 +47,7 @@
         .btn{
             color: #fff;
             font-size: 0.48rem;
-            width:7.94rem;
+            width:80%;
             height: 0.906rem;
             line-height: 0.906rem;
             text-align: center;
@@ -78,7 +78,7 @@
             'getBrandWCPayRequest', JSON.parse(window.sessionStorage.getItem('wxPay')).data,
             (res) => {
                 if (res.err_msg === "get_brand_wcpay_request:ok") {
-                    window.location.reload()
+                    window.location.reload();
                 }
             }
         );

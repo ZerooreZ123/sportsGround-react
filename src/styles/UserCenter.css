@@ -42,8 +42,8 @@
 }
 .panel>div>span{
   display: inline-block;
-  width: 225px;
-  margin-right: 44px;
+  width: 200px;
+  margin-right: 20px;
   text-align: right;
 }
 .pen{
@@ -68,8 +68,9 @@
   margin-top: 20px; 
 }
 .name{
+  display:inline-block;
   border:none;
-  width:360px;
+  width:45%;
 }
 .editBtn {
   color: #fff;
@@ -85,7 +86,7 @@
 .list{
   
   max-height:320px;
-  margin-left:250px;
+  margin-left:190px;
   margin-right:80px;
   overflow: auto;
   font-size:20px;

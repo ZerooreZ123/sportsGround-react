@@ -6,6 +6,9 @@
     background-size: 100% 100%;
     height: 374px;
   }
+  .rechargeList{
+    margin-bottom:140px;
+  }
   .listItem {
     display:flex;
     justify-content: center;
@@ -33,16 +36,24 @@
     width: 35px;
     margin-right:54px;
   }
-  .rechargeBtn{
+  .btnBox{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:200px;
+
+}
+.rechargeBtn{
     color: #fff;
     font-size: 36px;
-    width:596px;
+    width:80%;
     height: 68px;
     line-height: 68px;
     text-align: center;
     background-color: #0eb668;
-    position: fixed;
-    bottom:103px;
-    margin:0 80px;
-  }
+}
   

@@ -34,7 +34,7 @@ class BookingRecord extends Component {
                 <div className={styles.date}>{item.usedate}&emsp;{item.week}</div>
                 <div className={styles.time}>{item.starttime}~{item.endtime}</div>
                 {/* <img className={styles.stateImg} src={hasBookingImg} alt="" /> */}
-                <span className={styles.money}>￥{item.price}</span>
+                <span className={styles.money}>￥{item.price/100}</span>
               </div>
             </div>
           )
