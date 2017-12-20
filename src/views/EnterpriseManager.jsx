@@ -29,7 +29,7 @@ class EnterpriseManager extends Component {
     const result = await XHR.post(API.userAudit,{
       targetId:this.state.dataSource[i].id,
       passed:this.state.dataSource[i].passed,
-      delflag:1
+      companyid:null
     })
     if(JSON.parse(result).success) {
       const list = this.state.dataSource;
@@ -57,8 +57,8 @@ class EnterpriseManager extends Component {
     const result = await XHR.post(API.userAudit,{
       targetId:this.state.dataSource[i].id,
       id:this.state.dataSource[i].id,
-      delflag:0,
-      passed: this.state.dataSource[i].passed
+      passed: this.state.dataSource[i].passed,
+      companyid:this.state.dataSource[i].companyid
     })
     this.setState({dataSource:this.state.dataSource})
   }
